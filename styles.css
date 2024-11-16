@@ -43,7 +43,7 @@ nav .nav-links a {
 
 /* Seção Hero */
 .hero {
-    background-image: url ('https://www.pexels.com/pt-br/foto/comida-alimento-refeicao-italiano-22797802/');
+    background-image: url('https://images.pexels.com/photos/22797802/pexels-photo-22797802.jpeg'); 
     background-size: cover;
     background-position: center;
     color: #fff;
