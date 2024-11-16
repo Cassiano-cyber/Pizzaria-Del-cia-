@@ -43,7 +43,7 @@ nav .nav-links a {
 
 /* Seção Hero */
 .hero {
-    background-image: url('https://pixabay.com/pt/photos/alimentos-lanche-carne-3309418/.jpg'); /* Replace with the actual image URL */
+    background-image: url('https://pixabay.com/pt/photos/alimentos-lanche-carne-3309418/'); /* Replace with the actual image URL */
     background-size: cover;
     background-position: center;
     color: #fff;
