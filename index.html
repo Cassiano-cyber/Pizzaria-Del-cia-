@@ -1,87 +1,766 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizzaria Delícia</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explosão Crocante | Salgados & Pizzas Artesanais</title>
+  <meta name="description" content="Cardápio digital de salgados autorais e pizzas rústicas. Surpreenda-se com sabores criativos e finalize seu pedido pelo WhatsApp.">
+  <meta name="keywords" content="salgados, pizzas, artesanal, cardápio, delivery, Explosão Crocante, coxinha vulcão, sabores surpresa, fidelidade, São José do Rio Preto">
+  <meta property="og:title" content="Explosão Crocante | Salgados & Pizzas Artesanais">
+  <meta property="og:description" content="O sabor do futuro começa aqui. Experimente salgados autorais, pizzas rústicas e o cardápio surpresa da Explosão Crocante.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="theme-color" content="#7B2D26">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/50/7B2D26/bread.png">
+  <style>
+    :root {
+      --vinho: #7B2D26;
+      --vinho-escuro: #4B1813;
+      --areia: #F5E9DA;
+      --areia-escuro: #E2C9A0;
+      --dourado: #C9A66B;
+      --cinza: #f8f8f8;
+      --cinza-escuro: #333;
+      --fonte-titulo: 'Dancing Script', cursive;
+      --fonte-base: 'Montserrat', Arial, sans-serif;
+      --sombra: 0 4px 24px 0 rgba(123,45,38,0.08);
+      --raio: 16px;
+      --trans: .3s cubic-bezier(.4,0,.2,1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--fonte-base);
+      background: var(--areia);
+      color: var(--vinho-escuro);
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(120deg, var(--vinho) 60%, var(--areia-escuro) 100%);
+      color: #fff;
+      box-shadow: var(--sombra);
+      position: relative;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: #fff;
+    }
+    .nav-logo img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--dourado);
+      background: #fff;
+      object-fit: cover;
+    }
+    .nav-logo span {
+      font-family: var(--fonte-titulo);
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: .5rem 1rem;
+      border-radius: var(--raio);
+      transition: background var(--trans), color var(--trans);
+    }
+    .nav-links a:hover, .nav-links a:focus {
+      background: var(--dourado);
+      color: var(--vinho-escuro);
+      outline: none;
+    }
+    .cart-btn {
+      background: var(--dourado);
+      color: var(--vinho-escuro);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: var(--sombra);
+      position: relative;
+      transition: background var(--trans), transform var(--trans);
+    }
+    .cart-btn:hover, .cart-btn:focus { background: #fff3e0; transform: scale(1.08);}
+    .cart-count {
+      position: absolute;
+      top: 4px; right: 4px;
+      background: var(--vinho);
+      color: #fff;
+      font-size: .8rem;
+      border-radius: 50%;
+      width: 20px; height: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold;
+      border: 2px solid #fff;
+    }
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+      background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(123,45,38,0.7) 60%, rgba(245,233,218,0.2) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      padding: 3rem 1rem 2rem 1rem;
+    }
+    .hero-content h1 {
+      font-family: var(--fonte-titulo);
+      font-size: 3rem;
+      margin: 0 0 1rem 0;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px #0005;
+    }
+    .hero-content p {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      text-shadow: 0 1px 4px #0003;
+    }
+    .hero-content .cta {
+      background: var(--dourado);
+      color: var(--vinho-escuro);
+      border: none;
+      border-radius: var(--raio);
+      padding: .9rem 2.2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: var(--sombra);
+      transition: background var(--trans), color var(--trans), transform var(--trans);
+    }
+    .hero-content .cta:hover, .hero-content .cta:focus {
+      background: #fff3e0;
+      color: var(--vinho);
+      transform: translateY(-2px) scale(1.04);
+      outline: none;
+    }
+    main { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+    section { margin-bottom: 3rem; }
+    .section-title {
+      font-family: var(--fonte-titulo);
+      font-size: 2.2rem;
+      color: var(--vinho);
+      margin-bottom: .5rem;
+      text-align: center;
+    }
+    .section-desc {
+      color: var(--vinho-escuro);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    .sobre {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: var(--raio);
+      box-shadow: var(--sombra);
+      padding: 2rem 1.5rem;
+    }
+    .sobre-img {
+      flex: 1 1 220px;
+      min-width: 180px;
+      max-width: 320px;
+      border-radius: var(--raio);
+      box-shadow: 0 2px 12px #0001;
+      object-fit: cover;
+      background: var(--areia-escuro);
+    }
+    .sobre-txt {
+      flex: 2 1 320px;
+      min-width: 220px;
+      font-size: 1.1rem;
+      color: var(--vinho-escuro);
+    }
+    .cardapio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .produto-card {
+      background: #fff;
+      border-radius: var(--raio);
+      box-shadow: var(--sombra);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.2rem 1rem 1.5rem 1rem;
+      transition: box-shadow var(--trans), transform var(--trans);
+      position: relative;
+    }
+    .produto-card:hover, .produto-card:focus-within {
+      box-shadow: 0 8px 32px 0 rgba(123,45,38,0.16);
+      transform: translateY(-4px) scale(1.02);
+      z-index: 2;
+    }
+    .produto-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--dourado);
+      margin-bottom: 1rem;
+      background: var(--areia-escuro);
+    }
+    .produto-card h3 {
+      font-family: var(--fonte-titulo);
+      font-size: 1.3rem;
+      margin: .2rem 0 .5rem 0;
+      color: var(--vinho);
+    }
+    .produto-card p {
+      font-size: 1rem;
+      color: var(--vinho-escuro);
+      margin: 0 0 .7rem 0;
+      text-align: center;
+    }
+    .produto-card .preco {
+      font-weight: bold;
+      color: var(--vinho);
+      font-size: 1.1rem;
+      margin-bottom: .7rem;
+    }
+    .produto-card button {
+      background: var(--vinho);
+      color: #fff;
+      border: none;
+      border-radius: var(--raio);
+      padding: .6rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--sombra);
+      transition: background var(--trans), color var(--trans), transform var(--trans);
+    }
+    .produto-card button:hover, .produto-card button:focus {
+      background: var(--dourado);
+      color: var(--vinho-escuro);
+      transform: scale(1.05);
+      outline: none;
+    }
+    .misterio {
+      background: linear-gradient(120deg, var(--vinho-escuro) 60%, var(--dourado) 100%);
+      color: #fff;
+      border-radius: var(--raio);
+      box-shadow: var(--sombra);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .misterio h3 {
+      font-family: var(--fonte-titulo);
+      font-size: 1.7rem;
+      margin-bottom: .7rem;
+      color: #fff;
+    }
+    .misterio .misterio-icone {
+      font-size: 2.5rem;
+      margin-bottom: .5rem;
+      color: var(--dourado);
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1);}
+      50% { transform: scale(1.12);}
+    }
+    .fidelidade {
+      background: #fff;
+      border-radius: var(--raio);
+      box-shadow: var(--sombra);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .fidelidade input, .fidelidade button {
+      font-size: 1rem;
+      padding: .6rem 1rem;
+      border-radius: var(--raio);
+      border: 1px solid var(--areia-escuro);
+      margin: .3rem 0;
+      width: 100%;
+      max-width: 320px;
+      box-sizing: border-box;
+    }
+    .fidelidade button {
+      background: var(--vinho);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      margin-top: .7rem;
+      transition: background var(--trans), color var(--trans);
+      cursor: pointer;
+    }
+    .fidelidade button:hover, .fidelidade button:focus {
+      background: var(--dourado);
+      color: var(--vinho-escuro);
+      outline: none;
+    }
+    .cart-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(123,45,38,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity var(--trans), visibility var(--trans);
+    }
+    .cart-modal.open {
+      visibility: visible;
+      opacity: 1;
+    }
+    .cart-box {
+      background: #fff;
+      border-radius: var(--raio);
+      box-shadow: 0 8px 32px 0 rgba(123,45,38,0.18);
+      padding: 2rem 1.2rem 1.2rem 1.2rem;
+      min-width: 320px;
+      max-width: 95vw;
+      width: 400px;
+      position: relative;
+      animation: fadeIn .4s;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(.95);} to { opacity: 1; transform: scale(1);} }
+    .cart-box h2 { margin-top: 0; color: var(--vinho);}
+    .cart-list { list-style: none; padding: 0; margin: 1rem 0;}
+    .cart-list li {
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--areia-escuro);
+      padding: .5rem 0;
+      font-size: 1rem;
+    }
+    .cart-list .remove-btn {
+      background: none;
+      border: none;
+      color: var(--vinho);
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-left: .7rem;
+      transition: color var(--trans);
+    }
+    .cart-list .remove-btn:hover, .cart-list .remove-btn:focus { color: #c00; }
+    .cart-total {
+      font-weight: bold;
+      color: var(--vinho-escuro);
+      text-align: right;
+      margin-bottom: 1rem;
+    }
+    .cart-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+    .cart-actions button {
+      background: var(--vinho);
+      color: #fff;
+      border: none;
+      border-radius: var(--raio);
+      padding: .7rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background var(--trans), color var(--trans);
+    }
+    .cart-actions button:hover, .cart-actions button:focus {
+      background: var(--dourado);
+      color: var(--vinho-escuro);
+      outline: none;
+    }
+    .cart-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--vinho-escuro);
+      cursor: pointer;
+      transition: color var(--trans);
+    }
+    .cart-close:hover, .cart-close:focus { color: #c00; }
+    .contato {
+      background: #fff;
+      border-radius: var(--raio);
+      box-shadow: var(--sombra);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .contato a {
+      color: var(--vinho);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color var(--trans);
+    }
+    .contato a:hover, .contato a:focus { color: var(--dourado);}
+    footer {
+      background: var(--vinho-escuro);
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem 1rem 1rem;
+      font-size: 1rem;
+      border-top-left-radius: var(--raio);
+      border-top-right-radius: var(--raio);
+      margin-top: 3rem;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      justify-content: center;
+      margin: 1rem 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color var(--trans);
+    }
+    .footer-links a:hover, .footer-links a:focus { color: var(--dourado);}
+    @media (max-width: 800px) {
+      .nav { flex-direction: column; gap: 1rem; }
+      .sobre { flex-direction: column; }
+      .sobre-img { max-width: 220px; }
+      .cart-box { min-width: 90vw; }
+    }
+    @media (max-width: 600px) {
+      .hero-content h1 { font-size: 2.1rem;}
+      .section-title { font-size: 1.4rem;}
+      .nav-links { flex-direction: column; gap: .5rem;}
+      .cart-box { padding: 1rem .5rem;}
+      main { padding: 1rem .2rem;}
+    }
+  </style>
 </head>
 <body>
-    <!-- Barra de navegação -->
-    <nav>
-        <div class="logo">
-            <h1>Pizzaria Delícia</h1>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#menu">Menu</a></li>
-            <li><a href="#about">Sobre nós</a></li>
-            <li><a href="#contact">Contato</a></li>
-        </ul>
+  <header>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="#hero" class="nav-logo">
+        <img src="https://img.icons8.com/ios-filled/100/7B2D26/bread.png" alt="Logo Explosão Crocante">
+        <span>Explosão Crocante</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#cardapio">Cardápio</a></li>
+        <li><a href="#misterio">Sabores Surpresa</a></li>
+        <li><a href="#fidelidade">Fidelidade</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+      <button class="cart-btn" aria-label="Abrir carrinho" onclick="abrirCarrinho()" tabindex="0">
+        🛒 <span class="cart-count" id="cart-count">0</span>
+      </button>
     </nav>
-
-    <!-- Seção de Introdução -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h2>Seja bem-vindo à Pizzaria Delícia</h2>
-            <p>A melhor pizza da cidade, feita com ingredientes frescos e selecionados especialmente para você!</p>
-            <a href="#menu" class="cta-button">Veja nosso Menu</a>
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <h1>O sabor do futuro começa aqui</h1>
+        <p>Artesanal, limpo, surpreendente.<br>Salte do comum: experimente salgados autorais e pizzas rústicas criadas por quem ama gastronomia.</p>
+        <a href="#cardapio" class="cta">Ver Cardápio</a>
+      </div>
+    </section>
+  </header>
+  <main>
+    <section id="sobre">
+      <h2 class="section-title">Sobre a Explosão Crocante</h2>
+      <p class="section-desc">Uma nova experiência gastronômica em São José do Rio Preto, unindo tradição, criatividade e atendimento impecável.</p>
+      <div class="sobre">
+        <img src="https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80" alt="Chef preparando massa artesanal" class="sobre-img">
+        <div class="sobre-txt">
+          <p>
+            Nascida do sonho de um chef em formação na <strong>Le Grand Chef</strong>, a Explosão Crocante é mais que uma loja: é um convite ao novo. Aqui, cada salgado e pizza é feito com insumos selecionados, limpeza extrema e um toque de ousadia. Nosso atendimento é caloroso e nossa missão é surpreender seu paladar com sabores que você nunca imaginou.
+          </p>
+          <p>
+            <em>Em breve, loja física e integração com iFood.<br>
+            Siga-nos e acompanhe a inauguração!</em>
+          </p>
         </div>
+      </div>
     </section>
-
-    <!-- Seção de Menu -->
-    <section id="menu" class="menu">
-        <h2>Nosso Menu</h2>
-        <div class="menu-items">
-            <div class="menu-item">
-                <img src="https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg" alt="Pizza Margherita">
-                <h3>Pizza Margherita</h3>
-                <p>Queijo mussarela, molho de tomate e manjericão fresco.</p>
-                <span>R$ 35,00</span>
-            </div>
-            <div class="menu-item">
-                <img src="https://images.pexels.com/photos/1640773/pexels-photo-1640773.jpeg" alt="Pizza Pepperoni">
-                <h3>Pizza Pepperoni</h3>
-                <p>Queijo mussarela, molho de tomate e fatias de pepperoni.</p>
-                <span>R$ 40,00</span>
-            </div>
-            <div class="menu-item">
-                <img src="https://images.pexels.com/photos/1639532/pexels-photo-1639532.jpeg" alt="Pizza Vegetariana">
-                <h3>Pizza Vegetariana</h3>
-                <p>Abobrinha, berinjela, tomate e pimentão.</p>
-                <span>R$ 38,00</span>
-            </div>
-        </div>
+    <section id="cardapio">
+      <h2 class="section-title">Cardápio Artesanal</h2>
+      <p class="section-desc">Salgados autorais e pizzas rústicas. Escolha, adicione ao carrinho e finalize seu pedido pelo WhatsApp.</p>
+      <div class="cardapio-grid" id="produtos-lista">
+        <!-- Produtos inseridos via JS -->
+      </div>
     </section>
-    <section id="menu" class=add">
-        <h1>adicionais:</h1>
-        <div class="menu-adicionais">
-            <div class="menu-add"
-                <h2>Queijo</h2>
-                <span>R$ 4,00</span>
-            </div>
+    <section id="misterio" class="misterio">
+      <div class="misterio-icone" aria-hidden="true">🎩✨</div>
+      <h3>Sabores Surpresa</h3>
+      <p>
+        Descubra o inesperado! Nosso <strong>cardápio secreto</strong> traz criações exclusivas, como a <strong>Coxinha Vulcão</strong> finalizada com maçarico na sua frente.<br>
+        <em>Peça o Sabor Misterioso e viva uma experiência única.</em>
+      </p>
+      <button class="cta" onclick="adicionarMisterio()">Quero Sabor Surpresa</button>
     </section>
-
-    <!-- Seção Sobre nós -->
-    <section id="about" class="about">
-        <h2>Sobre nós</h2>
-        <p>Somos apaixonados por pizza! Na Pizzaria Delícia, garantimos que cada pedaço seja uma explosão de sabor. Trabalhamos com ingredientes de qualidade e preparamos as pizzas com todo o carinho para nossos clientes.</p>
+    <section id="fidelidade" class="fidelidade">
+      <h2 class="section-title">Programa de Fidelidade</h2>
+      <p class="section-desc">A cada pedido, você acumula pontos para trocar por descontos e produtos exclusivos.</p>
+      <form id="fidelidade-form" autocomplete="on">
+        <input type="text" id="fidelidade-nome" placeholder="Seu nome" required autocomplete="name">
+        <input type="tel" id="fidelidade-tel" placeholder="WhatsApp" required autocomplete="tel">
+        <button type="submit">Cadastrar e começar a pontuar</button>
+      </form>
+      <div id="fidelidade-status" style="display:none; margin-top:1rem;">
+        <p>Olá, <span id="fidelidade-usuario"></span>! Você já tem <span id="fidelidade-pontos">0</span> pontos.</p>
+      </div>
     </section>
-
-    <!-- Seção de Contato -->
-    <section id="contact" class="contact">
-        <h2>Entre em Contato</h2>
-        <form action="#">
-            <input type="text" placeholder="Seu nome" required>
-            <input type="email" placeholder="Seu e-mail" required>
-            <textarea placeholder="Sua mensagem" required></textarea>
-            <button type="submit">Enviar</button>
-        </form>
+    <section id="contato" class="contato">
+      <h2 class="section-title">Contato & Localização</h2>
+      <p class="section-desc">Fale conosco, tire dúvidas ou venha nos visitar em breve!</p>
+      <p>
+        <strong>WhatsApp:</strong> <a href="https://wa.me/5517996780618" target="_blank" rel="noopener">(17) 99678-0618</a><br>
+        <strong>Email:</strong> <a href="mailto:contato@explosaocrocante.com.br">contato@explosaocrocante.com.br</a>
+      </p>
+      <p>
+        <strong>Endereço:</strong> Rua Exemplo, 123, Centro, São José do Rio Preto - SP<br>
+        <em>(Loja física em construção)</em>
+      </p>
+      <iframe src="https://www.google.com/maps?q=Rua+Exemplo,+123,+São+José+do+Rio+Preto,+SP&output=embed"
+        width="100%" height="180" style="border:0; border-radius:12px; margin-top:1rem;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" title="Mapa da localização"></iframe>
     </section>
-
-    <!-- Rodapé -->
-    <footer>
-        <p>&copy; 2024 Pizzaria Delícia | Todos os direitos reservados.</p>
-    </footer>
+  </main>
+  <footer>
+    <div>
+      <strong>Explosão Crocante</strong> &copy; 2025 &mdash; O sabor do futuro começa aqui.<br>
+      <ul class="footer-links">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#cardapio">Cardápio</a></li>
+        <li><a href="#misterio">Sabores Surpresa</a></li>
+        <li><a href="#fidelidade">Fidelidade</a></li>
+        <li><a href="#contato">Contato</a></li>
+        <li><a href="https://www.instagram.com/explosao_crocante_salgaderia/" target="_blank" rel="noopener">Instagram</a></li>
+      </ul>
+    </div>
+  </footer>
+  <!-- Modal Carrinho -->
+  <div class="cart-modal" id="cart-modal" aria-modal="true" role="dialog" tabindex="-1">
+    <div class="cart-box" role="document">
+      <button class="cart-close" aria-label="Fechar carrinho" onclick="fecharCarrinho()">&times;</button>
+      <h2>Seu Carrinho</h2>
+      <ul class="cart-list" id="cart-list"></ul>
+      <div class="cart-total" id="cart-total">Total: R$ 0,00</div>
+      <div class="cart-actions">
+        <button onclick="finalizarPedido()">Finalizar Pedido</button>
+        <button onclick="limparCarrinho()">Limpar</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Produtos do cardápio
+    const produtos = [
+      {
+        nome: "Coxinha Vulcão",
+        desc: "Coxinha autoral, recheio cremoso e finalização com maçarico. Surpreenda-se!",
+        preco: 8.00,
+        img: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
+        categoria: "Salgados"
+      },
+      {
+        nome: "Kibe Artesanal",
+        desc: "Kibe crocante, recheio de queijo e especiarias, feito com carne selecionada.",
+        preco: 7.00,
+        img: "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80",
+        categoria: "Salgados"
+      },
+      {
+        nome: "Empada Cremosa",
+        desc: "Massa amanteigada, recheio de frango com catupiry e toque de ervas.",
+        preco: 6.50,
+        img: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
+        categoria: "Salgados"
+      },
+      {
+        nome: "Pizza Margherita Rústica",
+        desc: "Massa de longa fermentação, molho artesanal, muçarela de búfala e manjericão.",
+        preco: 32.00,
+        img: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
+        categoria: "Pizzas"
+      },
+      {
+        nome: "Pizza Calabresa Artesanal",
+        desc: "Calabresa premium, cebola roxa, azeitonas e queijo artesanal.",
+        preco: 34.00,
+        img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
+        categoria: "Pizzas"
+      },
+      {
+        nome: "Pizza Sabor Surpresa",
+        desc: "Uma pizza exclusiva, criada pelo chef, com ingredientes secretos.",
+        preco: 36.00,
+        img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
+        categoria: "Pizzas"
+      }
+    ];
+    // Renderização dos produtos
+    function renderProdutos() {
+      const lista = document.getElementById('produtos-lista');
+      lista.innerHTML = '';
+      produtos.forEach((p, i) => {
+        const card = document.createElement('div');
+        card.className = 'produto-card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.nome}">
+          <h3>${p.nome}</h3>
+          <p>${p.desc}</p>
+          <div class="preco">R$ ${p.preco.toFixed(2).replace('.', ',')}</div>
+          <button onclick="adicionarCarrinho(${i})" aria-label="Adicionar ${p.nome} ao carrinho">Adicionar ao carrinho</button>
+        `;
+        lista.appendChild(card);
+      });
+    }
+    // Carrinho
+    let carrinho = [];
+    function adicionarCarrinho(idx) {
+      const prod = produtos[idx];
+      const existente = carrinho.find(item => item.nome === prod.nome);
+      if (existente) {
+        existente.qtd += 1;
+      } else {
+        carrinho.push({ ...prod, qtd: 1 });
+      }
+      atualizarCarrinho();
+      abrirCarrinho();
+    }
+    function adicionarMisterio() {
+      const prod = {
+        nome: "Sabor Surpresa",
+        desc: "Descubra um sabor exclusivo criado pelo chef!",
+        preco: 12.00,
+        img: "https://img.icons8.com/ios-filled/100/7B2D26/magic-wand.png",
+        categoria: "Misterioso",
+        qtd: 1
+      };
+      const existente = carrinho.find(item => item.nome === prod.nome);
+      if (existente) {
+        existente.qtd += 1;
+      } else {
+        carrinho.push(prod);
+      }
+      atualizarCarrinho();
+      abrirCarrinho();
+    }
+    function atualizarCarrinho() {
+      document.getElementById('cart-count').textContent = carrinho.reduce((a, b) => a + b.qtd, 0);
+      const list = document.getElementById('cart-list');
+      list.innerHTML = '';
+      let total = 0;
+      carrinho.forEach((item, idx) => {
+        total += item.preco * item.qtd;
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>${item.nome} <small>x${item.qtd}</small></span>
+          <span>
+            R$ ${(item.preco * item.qtd).toFixed(2).replace('.', ',')}
+            <button class="remove-btn" aria-label="Remover ${item.nome}" onclick="removerCarrinho(${idx})">&times;</button>
+          </span>
+        `;
+        list.appendChild(li);
+      });
+      document.getElementById('cart-total').textContent = 'Total: R$ ' + total.toFixed(2).replace('.', ',');
+    }
+    function removerCarrinho(idx) {
+      carrinho.splice(idx, 1);
+      atualizarCarrinho();
+    }
+    function limparCarrinho() {
+      carrinho = [];
+      atualizarCarrinho();
+      fecharCarrinho();
+    }
+    function abrirCarrinho() {
+      document.getElementById('cart-modal').classList.add('open');
+      document.getElementById('cart-modal').focus();
+    }
+    function fecharCarrinho() {
+      document.getElementById('cart-modal').classList.remove('open');
+    }
+    function finalizarPedido() {
+      if (carrinho.length === 0) {
+        alert('Seu carrinho está vazio!');
+        return;
+      }
+      let msg = 'Olá! Gostaria de fazer um pedido na Explosão Crocante:%0A';
+      carrinho.forEach(item => {
+        msg += `- ${item.nome} x${item.qtd} (R$ ${(item.preco * item.qtd).toFixed(2).replace('.', ',')})%0A`;
+      });
+      const total = carrinho.reduce((a, b) => a + b.preco * b.qtd, 0);
+      msg += `%0ATotal: R$ ${total.toFixed(2).replace('.', ',')}`;
+      window.open('https://wa.me/5517996780618?text=' + msg, '_blank');
+    }
+    // Fidelidade
+    document.getElementById('fidelidade-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nome = document.getElementById('fidelidade-nome').value.trim();
+      const tel = document.getElementById('fidelidade-tel').value.trim();
+      if (nome && tel) {
+        document.getElementById('fidelidade-status').style.display = 'block';
+        document.getElementById('fidelidade-usuario').textContent = nome.split(' ')[0];
+        document.getElementById('fidelidade-pontos').textContent = Math.floor(Math.random() * 50 + 10);
+        this.style.display = 'none';
+      }
+    });
+    // Fechar carrinho com ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "Escape") fecharCarrinho();
+    });
+    // Inicialização
+    renderProdutos();
+    atualizarCarrinho();
+  </script>
 </body>
 </html>
